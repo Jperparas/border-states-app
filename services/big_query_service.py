@@ -1,11 +1,15 @@
 from google.cloud import bigquery
+from google.oauth2 import service_account
 from datasets.valid_states import VALID_STATES
 
 class BigQueryService:
-    def __init__(self, project_id ,api_key):
+    def __init__(self, service_account_info):
+        credentials = service_account.Credentials.from_service_account_info(
+            service_account_info
+        )
         self.client = bigquery.Client(
-                project = project_id,
-                client_options = {"api_key":api_key}
+                credentials=credentials,
+                project =service_account_info["project_id"]
                 )
         self.df = None
 

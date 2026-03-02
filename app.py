@@ -3,9 +3,8 @@ from services.big_query_service import BigQueryService
 from datasets.valid_states import VALID_STATES
 
 bq = BigQueryService(
-    project_id=st.secrets["GCP_PROJECT_ID"],
-    api_key=st.secrets["GOOGLE_API_KEY"]
-        )
+        service_account_info=dict(st.secrets["GCP_SERVICE_ACCOUNT"])
+)
 state = st.selectbox("Select a state", sorted([s.title() for s in VALID_STATES]))
 if st.button("Search"):
     try:
